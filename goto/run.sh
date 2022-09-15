@@ -30,3 +30,7 @@ goto_list() {
     cd ~/Desktop/Codeprojects
     ls
 }
+
+nano_zshenv() {
+    nano ~/.zshenv
+}
