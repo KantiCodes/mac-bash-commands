@@ -1,5 +1,3 @@
-export PROJ_PATH=~/Desktop/Codeprojects
-
 goto() {
     # function cds to a certain folder under the ~/Desktop/Codeprojects/ folder
     # function takes one flag -v --venv that will decide if the virtualenv should be activated
@@ -26,7 +24,6 @@ goto() {
 }
 
 goto_list() {
-    # function lists all projects under the ~/Desktop/Codeprojects/ folder
     cd ~/Desktop/Codeprojects
     ls
 }
