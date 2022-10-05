@@ -4,6 +4,11 @@ goto() {
     
     # print help if no arguments are given
     if [ $# -eq 0 ]; then
+        cd ~/Desktop/Codeprojects/
+        return 1
+    fi
+
+    if [ $1 = "-h" ] || [ $1 = "--help" ]; then
         echo """Usage: goto_code <project_name>
         -v or --venv: activate virtualenv
         -l or --list: list all projects
@@ -11,7 +16,6 @@ goto() {
         return 1
     fi
 
-    # list all projects if -l or --list is given
     if [ $1 = "-l" ] || [ $1 = "--list" ]; then
         goto_list
         return 1
