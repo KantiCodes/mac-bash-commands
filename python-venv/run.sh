@@ -1,3 +1,4 @@
+export errorText="Something went wrong"
 pvenv () {
     pmake () {
         if [ $# = 0 ]; then
@@ -7,6 +8,14 @@ pvenv () {
         elif [ $1 = "39" ] || [ $1 = "3.9" ]; then
         echo "making 3.9 venv"
         python3.9 -m venv .venv
+
+        elif [ $1 = "310" ] || [ $1 = "3.10" ]; then
+        echo "making 3.10 venv"
+        python3.10 -m venv .venv
+
+        else
+        echo "Error: pmake: python version not found"
+        return 0
         fi
         
         echo "activating venv"
@@ -16,58 +25,93 @@ pvenv () {
     }
 
     if [ $# = 0 ] || [ $1 = "-h" ] || [ $1 = '--help' ]; then
+        echo "This is a tool for managing python environment"
         echo "options:"
-        echo "-h --help: print this help message"
-        echo "-a --activate: activate the virtualenv"
-        echo "-d --deactivate: deactivate the virtualenv"
-        echo "-r --remove: remove the virtualenv"
-        echo "-c --compile: compile the \$2 or requirements.in file"
-        echo "-i --install: install the \$2 or requirements.txt file"
-        echo "-m --make: make a virtualenv with python version \$2 or 3.8"
+
+        echo "  -h --help: print this help message"
+
+        echo "  -a --activate: activate the virtualenv"
+
+        echo "  -d --deactivate: deactivate the virtualenv"
+
+        echo "  -r --remove: remove the virtualenv"
+
+        echo "  -c --compile [requirements file]: compile the requirements file\n   - default: requirements.in"
+
+        echo "  -if --install-file [requirements file]: install requirements\n    - default: requirements.txt"
+
+        echo "  -i --install [package name]: install package"
+
+        echo "  -u --uninstall [package name]: uninstall package"
+
+        echo "  -m --make [python version]: make a virtualenv with python version; default3.8
+    available versions:
+    - 3.8 or 38
+    - 3.9 or 39
+    - 3.10 or 3.10"
+        return 0
+    fi
+
+    case $1 in
+        "-m" | "--make") pmake ${@:2}; return;;
+        "-a" | "--activate") source .venv/bin/activate; return;;
+        "-r" | "--remove") rm -rf .venv; return;;
+    esac
+
+
+    # All the commands below need to have venv activated
+    if ! check_venv;
+    then
+        echo "Error: venv needs to be activated to exectute this action"
         return 1
     fi
 
-    if [ $1 = "-m" ] || [ $1 = "--make" ]; then
-        # call pmake with all but the first arugments
-        pmake ${@:2}
-    fi
+    case $1 in
+        "-d" | "--deactivate") deactivate; return;;
+        "-c" | "--compile") compile_file $2; return;;
+        "-if" | "--install-file") install_file $2; return;;
+        "-i" | "--install") install_package $2; return;;
+        "-u" | "--uninstall") uninstall_package $2; return;;
 
-    # activate
-    if [ $1 = "-a" ] || [ $1 = "--activate" ]; then
-        source .venv/bin/activate
-        return 1
-    fi
+    esac
 
-    # deactivate
-    if [ $1 = "-d" ] || [ $1 = "--deactivate" ]; then
-        deactivate
-        return 1
-    fi
+    echo "Unknown command $1"
 
-    # remove
-    if [ $1 = "-r" ] || [ $1 = "--remove" ]; then
-        rm -rf .venv
-        return 1
-    fi
+}
 
-    # compile
-    if [ $1 = "-c" ] || [ $1 = "--compile" ]; then
-        if [ $# = 2 ]; then
-            python -m piptools compile -r $2
-            return 1
-        fi
-        python -m piptools compile -r requirements.in
-        return 1
+compile_file() {
+    local filePath=$1
+    local defaultPath="requirements.in"
+    if [ $# = 0 ]; then
+        echo "Using default path: $defaultPath"
+        filePath=$defaultPath
     fi
+    python -m piptools compile -r $filePath && return 0 || return 1
+}
 
-    # compile
-    if [ $1 = "-i" ] || [ $1 = "--install" ]; then
-        if [ $# = 2 ]; then
-            python -m pip install -r $2
-            return 1
-        fi
-        python -m pip install -r requirements.txt
-        return 1
+install_file() {
+    local filePath=$1
+    local defaultPath="requirements.txt"
+    if [ $# = 0 ]; then
+        echo "Using default path: $defaultPath"
+        filePath=$defaultPath
     fi
+    python -m pip install -r $filePath && return 0 || return 1
 
+}
+
+install_package() {
+    if [ $# = 1 ]; then
+        python -m pip install $1 && return 0 || echo "Error: install package missing [package name] argument"; return 1
+    fi
+}
+
+uninstall_package() {
+    if [ $# = 1 ]; then
+        python -m pip uninstall $1 && return 0 || echo "Error: uninstall package missing [package name] argument"; return 1
+    fi
+}
+
+check_venv(){
+    python --version > /dev/null 2>&1 && return 0 || return 1
 }
