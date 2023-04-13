@@ -1,13 +1,22 @@
 # mac-bash-commands
-My prviate helpers method for mac
+This repo has some helpers (mainly python related) to avoid writting boilerplate code.
 
 # Installation:
- - setup environmental variables inside env-vars file, for example:
-    * PROJ_PATH=~/Desktop/Projects/mac-bash-commands  # Location where you cloned the repo
-    * GOTO_PATH=~/Desktop/Projects/  # Default Directory of goto function with all of you repositories
- - To use my tool, please add the following line to your ```~/.zprofile``` file:
- 
-   ```source /path/to/my/tool.sh```
+ - inside a desired directory clone the repo:
+   * ```git clone https://github.com/KantiCodes/mac-bash-commands.git```
+ - setup environmental variables inside ```.../mac-bash-commands/env-vars``` file, for example:
+    ```
+    PROJ_PATH=~/Desktop/Projects/mac-bash-commands  # Location where you cloned the repo
+    GOTO_PATH=~/Desktop/Projects/  # Default Directory of goto function with all of you repositories
+    ```
+ - To use my tool edit the ```~/.zprofile``` so that it runs ```main.sh```.
+   1. run ```nano ~/.zprofile```
+   2. paste the following line to it (replace the location of the repo) 
+   
+      ```source /location-of-the-repo/mac-bash-commands/main.sh```
+   
+   3. finally **re-open the terminal**
+   
 
     This will allow you to access the tool's functionality from your terminal. Please note that you can also add this line to other shell initialization files such as ```.zshenv``` or ```.bashrc```, depending on your preference and setup.
 
@@ -18,7 +27,7 @@ My prviate helpers method for mac
 project navigator that allows you to quickly navigate to one of your repositories inside GOTO_PATH
 
 # python-venv
-Helper aliasing some of the boilerplate commands when handling python environments
+Helper aliasing some of the boilerplate commands when handling python environments such as creating venvs, compiling requirements.in, installing reqreuiemnts etc. See ```pvenv --help``` for all functionality
 
 Examples:
 - ```pvenv -m 3.10``` will run:
@@ -41,6 +50,8 @@ Examples:
     python -m pip install -r something/requirements.txt
 
   ```
+ 
+ 
 
 
 
