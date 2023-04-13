@@ -4,7 +4,7 @@ goto() {
     
     # print help if no arguments are given
     if [ $# -eq 0 ]; then
-        cd ~/Desktop/Codeprojects/
+        cd "$GOTO_PATH"
         return 1
     fi
 
@@ -20,15 +20,14 @@ goto() {
         goto_list
         return 1
     fi
-
-    cd ~/Desktop/Codeprojects/$1
+    cd "$GOTO_PATH/$1"
     if [ "$2" = "-v" ] || [ "$2" = "--venv" ]; then
         source .venv/bin/activate
     fi
 }
 
 goto_list() {
-    cd ~/Desktop/Codeprojects
+    cd "$GOTO_PATH"
     ls
 }
 

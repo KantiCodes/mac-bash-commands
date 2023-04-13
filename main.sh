@@ -1,6 +1,9 @@
-# loop through all the directories in the current directory and run all "run.bash" files in them
-export PROJ_PATH=~/Desktop/Codeprojects/mac-bash-commands
+SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 
+# Import env-vars
+. "$SCRIPT_DIR/env-vars"
+
+# Loop through all the directories in the current directory and run all "run.bash" files in them
 for dir in $PROJ_PATH/*; do
     if [ -d "$dir" ]; then
 
@@ -12,3 +15,4 @@ for dir in $PROJ_PATH/*; do
         fi
     fi
 done
+
