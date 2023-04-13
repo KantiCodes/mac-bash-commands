@@ -1,0 +1,4 @@
+# Path to this repository
+PROJ_PATH=~/SomeDir1/SomeDir2/mac-bash-commands
+# Default path of goto command -> Path to where your repositories are
+GOTO_PATH=~/SomeDir1/SomeDir2/
