@@ -5,7 +5,7 @@ My prviate helpers method for mac
  - setup environmental variables inside env-vars file, for example:
     * PROJ_PATH=~/Desktop/Projects/mac-bash-commands  # Location where you cloned the repo
     * GOTO_PATH=~/Desktop/Projects/  # Default Directory of goto function with all of you repositories
- - "To use my tool, please add the following line to your ```~/.zprofile``` file:
+ - To use my tool, please add the following line to your ```~/.zprofile``` file:
  
    ```source /path/to/my/tool.sh```
 
