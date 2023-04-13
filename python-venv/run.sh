@@ -55,7 +55,7 @@ pvenv () {
     case $1 in
         "-m" | "--make") pmake ${@:2}; return;;
         "-a" | "--activate") source .venv/bin/activate; return;;
-        "-r" | "--remove") rm -rf .venv; return;;
+        "-r" | "--remove") remove_venv; return;;
     esac
 
 
@@ -77,6 +77,10 @@ pvenv () {
 
     echo "Unknown command $1"
 
+}
+remove_venv() {
+    deactivate
+    rm -rf .venv
 }
 
 compile_file() {

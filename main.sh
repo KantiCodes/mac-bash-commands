@@ -10,7 +10,6 @@ for dir in $PROJ_PATH/*; do
         # if run.sh exists, run it
         if [ -f "$dir/run.sh" ]; then
 
-            echo "Executing run.sh inside $dir/run.sh"
             source $dir/run.sh
         fi
     fi
