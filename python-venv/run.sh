@@ -3,15 +3,15 @@ pvenv () {
     pmake () {
         if [ $# = 0 ]; then
         echo "making 3.8 venv"
-        python3.8 -m venv .venv
+        python3.8 -m venv $VENV_ALIAS
 
         elif [ $1 = "39" ] || [ $1 = "3.9" ]; then
         echo "making 3.9 venv"
-        python3.9 -m venv .venv
+        python3.9 -m venv $VENV_ALIAS
 
         elif [ $1 = "310" ] || [ $1 = "3.10" ]; then
         echo "making 3.10 venv"
-        python3.10 -m venv .venv
+        python3.10 -m venv $VENV_ALIAS
 
         else
         echo "Error: pmake: python version not found"
@@ -19,7 +19,7 @@ pvenv () {
         fi
         
         echo "activating venv"
-        source .venv/bin/activate
+        source $VENV_ALIAS/bin/activate
         echo "installing pip-tools"
         python -m pip install pip-tools
     }
@@ -54,7 +54,7 @@ pvenv () {
 
     case $1 in
         "-m" | "--make") pmake ${@:2}; return;;
-        "-a" | "--activate") source .venv/bin/activate; return;;
+        "-a" | "--activate") source $VENV_ALIAS/bin/activate; return;;
         "-r" | "--remove") remove_venv; return;;
     esac
 
@@ -80,7 +80,7 @@ pvenv () {
 }
 remove_venv() {
     deactivate
-    rm -rf .venv
+    rm -rf $VENV_ALIAS
 }
 
 compile_file() {

@@ -1,4 +1,8 @@
-# Path to this repository
+# Path to this repository will be used to iterate over all of the command-directiories and source their content
 PROJ_PATH=~/SomeDir1/SomeDir2/mac-bash-commands
+
 # Default path of goto command -> Path to where your repositories are
 GOTO_PATH=~/SomeDir1/SomeDir2/
+
+# Venv dir name
+VENV_ALIAS=.venv
